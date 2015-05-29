@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateGenresTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{loginController.userSystem.role!='admin'}">
+                <div class="alert alert-danger">
+                    <h:outputText escape="false" value="#{bundle.permissionMessage}"/>
+                </div>                    
+            </h:panelGroup>
+            <h:form rendered="#{loginController.userSystem.role=='admin'}">
+                <h1 class='page-header'>
+                   #{genresController.selected.id!=null ? bundle.edit : bundle.add} #{bundle.Genre}
+                </h1>
+                <h:panelGroup class="form-group" layout="block" rendered="#{genresController.selected.id!=null}">
+                    <h:outputLabel value="#{bundle.CreateGenresLabel_id}" for="id" />
+                    #{genresController.selected.id}                    
+                </h:panelGroup> 
+                <div class="form-group">
+                    <h:outputLabel value="#{bundle.CreateGenresLabel_title}" for="name" />
+                    <h:inputText id="name" class="form-control" value="#{genresController.selected.title}" title="#{bundle.CreateGenresTitle_title}" required="true" requiredMessage="#{bundle.CreateGenresRequiredMessage_title}"/>
+                </div>
+                
+                <div class="footer-form">  
+                    <h:commandLink class="btn btn-primary navbar-right btn-save" rendered="#{genresController.selected.id ==null}" action="#{genresController.create}" value="#{bundle.save}" />
+                    <h:commandLink class="btn btn-primary navbar-right btn-save" rendered="#{genresController.selected.id !=null}" action="#{genresController.update}" value="#{bundle.save}" />
+                    <a class="btn btn-default navbar-right btn-cancel" href="list.xhtml">#{bundle.cancel}</a>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

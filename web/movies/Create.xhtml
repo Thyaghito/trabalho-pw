@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateMoviesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{loginController.userSystem.role!='admin'}">
+                <div class="alert alert-danger">
+                    <h:outputText escape="false" value="#{bundle.permissionMessage}"/>
+                </div>                    
+            </h:panelGroup>
+            <h:form rendered="#{loginController.userSystem.role=='admin'}">
+                <h1 class='page-header'>
+                   #{moviesController.selected.id!=null ? bundle.edit : bundle.add} #{bundle.Movie}
+                </h1>
+                <div class="form-group">
+                     <h:outputLabel value="#{bundle.CreateMoviesLabel_title}" for="title" />
+                    <h:inputText id="title" class="form-control" value="#{moviesController.selected.title}" title="#{bundle.CreateMoviesTitle_title}" required="true" requiredMessage="#{bundle.CreateMoviesRequiredMessage_title}"/>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="#{bundle.CreateMoviesLabel_originalTitle}" for="originalTitle" />
+                    <h:inputText id="originalTitle" class="form-control" value="#{moviesController.selected.originalTitle}" title="#{bundle.CreateMoviesTitle_originalTitle}" required="true" requiredMessage="#{bundle.CreateMoviesRequiredMessage_originalTitle}"/>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="#{bundle.CreateMoviesLabel_year}" for="year" />
+                    <h:inputText id="year" class="form-control" value="#{moviesController.selected.year}" title="#{bundle.CreateMoviesTitle_year}" required="true" requiredMessage="#{bundle.CreateMoviesRequiredMessage_year}"/>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="#{bundle.CreateMoviesLabel_countryOrigin}" for="countryOrigin" />
+                    <h:inputText id="countryOrigin" class="form-control" value="#{moviesController.selected.countryOrigin}" title="#{bundle.CreateMoviesTitle_countryOrigin}" />
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="#{bundle.CreateMoviesLabel_studioDistributor}" for="studioDistributor" />
+                    <h:inputText id="studioDistributor" class="form-control" value="#{moviesController.selected.studioDistributor}" title="#{bundle.CreateMoviesTitle_studioDistributor}" />
+                </div>   
+                <div class="form-group">                    
+                    <h:outputLabel value="#{bundle.actors}" for="actors" />       
+                    <h:selectManyListbox  id="actors" value="#{moviesController.selected.actors}" class="form-control">                        
+                        <f:selectItems value="#{actorsController.list}" var="Actors" itemValue="#{Actors.id}" itemLabel="#{Actors.name}"/>
+                    </h:selectManyListbox>
+                </div>
+                <div class="form-group">                    
+                    <h:outputLabel value="#{bundle.genres}" for="genres" />       
+                    <h:selectManyListbox  id="genres" value="#{moviesController.selected.genres}" class="form-control">                        
+                        <f:selectItems value="#{genresController.list}" var="Genres" itemValue="#{Genres.id}" itemLabel="#{Genres.title}"/>
+                    </h:selectManyListbox>
+                </div>
+                <div class="form-group">                    
+                    <h:outputLabel value="#{bundle.CreateMoviesLabel_moviesStaffmembersCollection}" for="staffmembers" />       
+                    <h:selectManyListbox  id="staffmembers" value="#{moviesController.selected.staffmembers}" class="form-control">                        
+                        <f:selectItems value="#{staffmembersController.list}" var="Staffmembers" itemValue="#{Staffmembers.id}" itemLabel="#{Staffmembers.name}"/>
+                    </h:selectManyListbox>
+                </div>
+                
+                <div class="footer-form">  
+                    <h:commandLink class="btn btn-primary navbar-right btn-save" rendered="#{moviesController.selected.id ==null}" action="#{moviesController.create}" value="#{bundle.save}" />
+                    <h:commandLink class="btn btn-primary navbar-right btn-save" rendered="#{moviesController.selected.id !=null}" action="#{moviesController.update}" value="#{bundle.save}" />
+                    <a class="btn btn-default navbar-right btn-cancel" href="list.xhtml">#{bundle.cancel}</a>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

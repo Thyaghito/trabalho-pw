@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewUsersTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                 <h1 class='page-header'>
+                    #{bundle.user}
+                </h1>
+                <dl>
+                    <dt>#{bundle.ViewUsersLabel_id}</dt>
+                    <dd>
+                        #{usersController.selected.id}
+                    </dd>
+                    <dt>#{bundle.ViewUsersLabel_name}</dt>
+                    <dd>
+                        #{usersController.selected.name}
+                    </dd>
+                    <dt>#{bundle.ViewUsersLabel_username}</dt>
+                    <dd>
+                        #{usersController.selected.username}
+                    </dd>
+                    <dt>#{bundle.ViewUsersLabel_role}</dt>
+                    <dd>
+                        #{usersController.selected.role}
+                    </dd>
+                    <dt>#{bundle.ViewUsersLabel_created}</dt>
+                    <dd>                        
+                        <h:outputText value="#{usersController.selected.created}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </dd>
+                    <dt>#{bundle.ViewUsersLabel_modified}</dt>
+                    <dd>                        
+                        <h:outputText value="#{usersController.selected.modified}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </dd>
+                </dl>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
